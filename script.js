@@ -65,6 +65,39 @@ let currentSessionLastPlayed = {
   bonus: ""
 };
 const API_TIMEOUT_MS = 30000;
+const APP_VERSION = "2026.05.16.1";
+
+async function ensureLatestAppVersion(){
+  try{
+    const res = await fetch("version.json?v=" + Date.now(), {
+      cache: "no-store"
+    });
+
+    if(!res.ok) return true;
+
+    const data = await res.json();
+    const latestVersion = String(data.version || "").trim();
+
+    if(latestVersion && latestVersion !== APP_VERSION){
+      const reloadKey = "dxb99MatchupReloadedVersion";
+
+      if(sessionStorage.getItem(reloadKey) !== latestVersion){
+        sessionStorage.setItem(reloadKey, latestVersion);
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("appVersion", latestVersion);
+        window.location.replace(url.toString());
+        return false;
+      }
+    }
+
+    sessionStorage.removeItem("dxb99MatchupReloadedVersion");
+  }catch(err){
+    console.log("Version check skipped");
+  }
+
+  return true;
+}
 
 function normalizeSkillValue(value){
   const numeric = Number(value);
@@ -468,6 +501,9 @@ function setupHelpGuide(){
 }
 
 window.addEventListener("load", async () => {
+
+const isLatestAppVersion = await ensureLatestAppVersion();
+if(!isLatestAppVersion) return;
 
 sessionStorage.removeItem("selectedGeneratorMatchMaker");
 sessionStorage.removeItem("selectedPlayers");
