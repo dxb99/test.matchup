@@ -115,31 +115,6 @@ opacity:1;
 visibility:visible;
 }
 
-.updateNotice{
-display:flex;
-align-items:center;
-justify-content:center;
-flex-wrap:wrap;
-gap:6px 14px;
-width:100%;
-max-width:1200px;
-margin:8px auto 0 auto;
-padding:6px 10px;
-box-sizing:border-box;
-border:1px solid rgba(250,204,21,0.38);
-border-radius:8px;
-background:rgba(250,204,21,0.10);
-color:#f8fafc;
-font-size:12px;
-font-weight:700;
-letter-spacing:0;
-line-height:1.2;
-}
-
-.updateNotice strong{
-color:#facc15;
-}
-
 /* ðŸ”¥ STATUS TEXT */
 #adminStatus{
   font-weight:600;
@@ -4054,7 +4029,7 @@ margin-top:180px;
   }
 
   .tabContent{
-    margin-top:118px;
+    margin-top:86px;
     padding:12px 10px 96px 10px;
   }
 
