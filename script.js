@@ -65,7 +65,7 @@ let currentSessionLastPlayed = {
   bonus: ""
 };
 const API_TIMEOUT_MS = 30000;
-const APP_VERSION = "2026.05.16.1";
+const APP_VERSION = "2026.05.16.2";
 
 async function ensureLatestAppVersion(){
   try{
