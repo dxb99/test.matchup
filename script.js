@@ -65,7 +65,7 @@ let currentSessionLastPlayed = {
   bonus: ""
 };
 const API_TIMEOUT_MS = 30000;
-const APP_VERSION = "2026.05.16.3";
+const APP_VERSION = "2026.05.16.4";
 
 async function ensureLatestAppVersion(){
   try{
@@ -78,7 +78,14 @@ async function ensureLatestAppVersion(){
     const data = await res.json();
     const latestVersion = String(data.version || "").trim();
 
-    if(latestVersion && latestVersion !== APP_VERSION){
+    const htmlVersion = String(
+      document.querySelector('meta[name="dxb99-app-version"]')?.getAttribute("content") || ""
+    ).trim();
+    const hasVersionBadge = !!document.getElementById("appVersionBadge");
+    const htmlShellIsCurrent = htmlVersion === latestVersion && hasVersionBadge;
+    const scriptIsCurrent = latestVersion === APP_VERSION;
+
+    if(latestVersion && (!scriptIsCurrent || !htmlShellIsCurrent)){
       const reloadKey = "dxb99MatchupReloadedVersion";
 
       if(sessionStorage.getItem(reloadKey) !== latestVersion){
