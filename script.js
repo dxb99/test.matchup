@@ -99,6 +99,13 @@ async function ensureLatestAppVersion(){
   return true;
 }
 
+function renderAppVersion(){
+  const badge = document.getElementById("appVersionBadge");
+  if(!badge) return;
+
+  badge.textContent = "v" + APP_VERSION;
+}
+
 function normalizeSkillValue(value){
   const numeric = Number(value);
   if(Number.isNaN(numeric)) return 0;
@@ -504,6 +511,7 @@ window.addEventListener("load", async () => {
 
 const isLatestAppVersion = await ensureLatestAppVersion();
 if(!isLatestAppVersion) return;
+renderAppVersion();
 
 sessionStorage.removeItem("selectedGeneratorMatchMaker");
 sessionStorage.removeItem("selectedPlayers");
