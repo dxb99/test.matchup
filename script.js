@@ -65,7 +65,7 @@ let currentSessionLastPlayed = {
   bonus: ""
 };
 const API_TIMEOUT_MS = 30000;
-const APP_VERSION = "2026.05.16.5";
+const APP_VERSION = "2026.05.16.6";
 
 async function ensureLatestAppVersion(){
   try{
@@ -3389,11 +3389,7 @@ async function loadMapListTabData(){
 
     globalMapList = normalizeSessionData(data.mapList || {});
     renderMasterMapList(globalMapList);
-    updateCustomMapHighlights();
-
-    setTimeout(()=>{
-      handleSessionHighlightUpdate();
-    }, 50);
+    renderAllSessionViews();
 
     mapListLoaded = true;
 
