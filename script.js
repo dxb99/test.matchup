@@ -65,7 +65,7 @@ let currentSessionLastPlayed = {
   bonus: ""
 };
 const API_TIMEOUT_MS = 30000;
-const APP_VERSION = "2026.05.16.4";
+const APP_VERSION = "2026.05.16.5";
 
 async function ensureLatestAppVersion(){
   try{
@@ -2521,6 +2521,27 @@ async function openHistoryPlayedMapsEditor(match){
 
   if(!isAdminUnlocked()){
     showModal("Unlock admin mode first.", "alert");
+    return;
+  }
+
+  showBusy("LOADING MAP LIST");
+
+  try{
+    await loadMapListTabData();
+  }catch(err){
+    hideBusy();
+    showModal("Could not load map list for history editing.", "alert");
+    return;
+  }
+
+  hideBusy();
+
+  const hasHistoryEditMapOptions = Object.values(globalMapList).some(list =>
+    Array.isArray(list) && list.length > 0
+  );
+
+  if(!hasHistoryEditMapOptions){
+    showModal("Map list is empty. Open the Map List tab first, then try again.", "alert");
     return;
   }
 
